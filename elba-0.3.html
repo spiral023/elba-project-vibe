@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="de" class="dark"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startseite - Mein ELBA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        :root {
+            --bg-primary-light: #f0f2f5;
+            --bg-secondary-light: #ffffff;
+            --text-primary-light: #1f2937; /* gray-800 */
+            --text-secondary-light: #4b5563; /* gray-600 */
+            --border-light: #e5e7eb; /* gray-200 */
+            --card-bg-light: #ffffff;
+            --icon-button-bg-light: #e9ecef;
+            --icon-button-hover-bg-light: #ced4da;
+            --table-header-bg-light: #e9ecef;
+            --elba-yellow: #ffdd00;
+            --elba-dark-blue: #003366;
+            --elba-dark-blue-text-light: #003366;
+            --splash-bg-light: #003366;
+            --splash-text-light: #ffffff;
+
+            --bg-primary-dark: #111827; /* gray-900 */
+            --bg-secondary-dark: #1f2937; /* gray-800 */
+            --text-primary-dark: #f3f4f6; /* gray-100 */
+            --text-secondary-dark: #9ca3af; /* gray-400 */
+            --border-dark: #374151; /* gray-700 */
+            --card-bg-dark: #1f2937; /* gray-800 */
+            --icon-button-bg-dark: #374151; /* gray-700 */
+            --icon-button-hover-bg-dark: #4b5563; /* gray-600 */
+            --table-header-bg-dark: #374151; /* gray-700 */
+            --elba-dark-blue-text-dark: #a5c9ff; /* Lighter blue for dark mode */
+            --splash-bg-dark: #001a33; /* Darker splash for dark mode */
+            --splash-text-dark: #e0e0e0;
+        }
+
+        html.dark {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --border-color: var(--border-dark);
+            --card-bg: var(--card-bg-dark);
+            --icon-button-bg: var(--icon-button-bg-dark);
+            --icon-button-hover-bg: var(--icon-button-hover-bg-dark);
+            --table-header-bg: var(--table-header-bg-dark);
+            --elba-dark-blue-text: var(--elba-dark-blue-text-dark);
+            --splash-bg: var(--splash-bg-dark);
+            --splash-text: var(--splash-text-dark);
+        }
+
+        html:not(.dark) {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --border-color: var(--border-light);
+            --card-bg: var(--card-bg-light);
+            --icon-button-bg: var(--icon-button-bg-light);
+            --icon-button-hover-bg: var(--icon-button-hover-bg-light);
+            --table-header-bg: var(--table-header-bg-light);
+            --elba-dark-blue-text: var(--elba-dark-blue-text-light);
+            --splash-bg: var(--splash-bg-light);
+            --splash-text: var(--splash-text-light);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .elba-yellow {
+            background-color: var(--elba-yellow);
+        }
+        .elba-yellow-text {
+            color: var(--elba-yellow);
+        }
+        .elba-dark-blue-header { /* Renamed to avoid conflict with text color var */
+            background-color: var(--elba-dark-blue);
+        }
+        .elba-dark-blue-text {
+            color: var(--elba-dark-blue-text);
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .icon-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: var(--icon-button-bg);
+            color: var(--elba-dark-blue-text); /* Use themed blue */
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            min-width: 100px;
+            height: 100px;
+        }
+        .icon-button:hover {
+            background-color: var(--icon-button-hover-bg);
+        }
+        .icon-button i {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .icon-button span {
+            font-size: 0.875rem;
+            text-align: center;
+            color: var(--text-secondary); /* Ensure text visibility */
+        }
+        .table-header th {
+            background-color: var(--table-header-bg);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--elba-dark-blue-text); /* Use themed blue */
+            border-bottom: 1px solid var(--border-color);
+        }
+        .table-row td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+            color: var(--text-secondary);
+        }
+        .table-row:last-child td {
+            border-bottom: none;
+        }
+        .status-dot {
+            height: 0.75rem; width: 0.75rem; border-radius: 50%;
+            display: inline-block; margin-right: 0.5rem;
+        }
+        .status-green { background-color: #28a745; }
+        .status-red { background-color: #dc3545; }
+
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: var(--splash-bg); /* Use CSS variable */
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; transition: opacity 0.5s ease-out;
+        }
+        #splash-screen img { max-width: 200px; margin-bottom: 20px; }
+        #splash-screen p {
+            color: var(--splash-text); /* Use CSS variable */
+            font-size: 1.25rem;
+        }
+        .hidden-splash { opacity: 0; pointer-events: none; }
+
+        .peer-comparison { font-size: 0.75rem; color: #6c757d; margin-left: 0.25rem; }
+        html.dark .peer-comparison { color: #9ca3af; }
+        .emoji-indicator { font-size: 1rem; margin-left: 0.5rem; }
+
+        /* Dark mode toggle button */
+        #theme-toggle {
+            background: none; border: none; cursor: pointer;
+            padding: 0.5rem; border-radius: 9999px;
+            color: white; /* Icon color in header */
+        }
+        #theme-toggle:hover { background-color: rgba(255, 255, 255, 0.1); }
+        #theme-toggle i { font-size: 1.25rem; }
+
+        /* Styling for Chart.js tooltips and legend in dark mode */
+        html.dark .chartjs-tooltip {
+            background: rgba(31, 41, 55, 0.9) !important; /* gray-800 with opacity */
+            color: #f3f4f6 !important; /* gray-100 */
+            border: 1px solid #4b5563 !important; /* gray-600 */
+        }
+        html.dark .chartjs-tooltip-key {
+            color: #f3f4f6 !important;
+        }
+        html.dark .chartjs-legend-text {
+            color: #f3f4f6 !important; /* gray-100 for legend text */
+        }
+        .chart-container {
+            position: relative;
+            height: 300px; /* Adjust as needed */
+            width: 100%;
+        }
+
+        /* General text color adjustments for better readability */
+        .text-gray-600 { color: var(--text-secondary); }
+        .text-gray-700 { color: var(--text-primary); } /* For slightly less prominent primary text */
+        .text-gray-800 { color: var(--text-primary); } /* Main body text if not overridden */
+        .text-gray-300 { color: var(--text-secondary-dark) } /* For mobile menu in dark mode */
+        html:not(.dark) .text-gray-300 { color: #d1d5db; } /* Light mode mobile nav text */
+
+
+        /* Quick Access Buttons */
+        .quick-access-button {
+            display: block; width: 100%; text-align: left;
+            font-semibold py-3 px-4 rounded-lg transition duration-150 ease-in-out;
+        }
+        .quick-access-yellow {
+            background-color: var(--elba-yellow); color: #1f2937; /* Dark text on yellow */
+        }
+        .quick-access-yellow:hover { background-color: #e6c600; } /* Darker yellow */
+
+        .quick-access-gray {
+            background-color: var(--icon-button-bg); color: var(--text-primary);
+        }
+        .quick-access-gray:hover { background-color: var(--icon-button-hover-bg); }
+
+        /* Security Note */
+        .security-note {
+            background-color: var(--elba-dark-blue-text-dark); /* Lighter blue for dark bg */
+            border-left-width: 4px;
+            border-color: var(--elba-yellow); /* Yellow accent */
+            padding: 1rem;
+            border-radius: 0.375rem;
+        }
+        html:not(.dark) .security-note {
+            background-color: #e0e7ff; /* Light blue for light mode */
+            border-color: var(--elba-dark-blue);
+        }
+        .security-note-icon {
+            color: var(--elba-yellow);
+        }
+        html:not(.dark) .security-note-icon {
+            color: var(--elba-dark-blue);
+        }
+        .security-note-text {
+            color: var(--text-primary-dark);
+        }
+        html:not(.dark) .security-note-text {
+            color: var(--elba-dark-blue-text-light);
+        }
+        .security-note-link {
+            font-weight: 500;
+            color: var(--elba-yellow);
+        }
+        html:not(.dark) .security-note-link {
+            color: var(--elba-dark-blue-text-light);
+            text-decoration: underline;
+        }
+        .security-note-link:hover {
+            text-decoration: underline;
+        }
+         /* Footer */
+        .footer-bg {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+        .footer-text {
+            color: var(--text-secondary);
+        }
+        .footer-link {
+            color: var(--text-secondary);
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: var(--elba-dark-blue-text);
+        }
+
+
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div id="splash-screen">
+        <img src="https://sp23.online/images/logo.png" alt="Logo Firmenname">
+        <p class="font-semibold">Mein ELBA lädt...</p>
+    </div>
+
+    <header class="elba-dark-blue-header text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <img src="https://sp23.online/images/logo.png" alt="Firmenlogo" class="h-10 mr-3">
+                    <span class="font-semibold text-xl tracking-tight">Mein ELBA</span>
+                </div>
+
+                <nav class="hidden md:flex space-x-4 items-center">
+                    <a href="#" class="px-3 py-2 rounded-md text-sm font-medium elba-yellow-text border-b-2 border-yellow-400" aria-current="page">Startseite</a>
+                    <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Zahlungsaufträge</a>
+                    <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Wertpapier</a>
+                    <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Postfach</a>
+                    <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Service</a>
+                </nav>
+
+                <div class="hidden md:flex items-center space-x-3">
+                    <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                        <i class="fas fa-sun"></i> </button>
+                    <button aria-label="Search" class="p-2 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <i class="fas fa-search text-white"></i>
+                    </button>
+                    <button aria-label="Notifications" class="p-2 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <i class="fas fa-bell text-white"></i>
+                    </button>
+                    <div class="relative">
+                        <button type="button" class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            <span class="sr-only">Benutzermenü öffnen</span>
+                            <i class="fas fa-user-circle text-2xl text-white"></i>
+                            <span class="ml-2 hidden lg:inline">Philipp Asanger</span>
+                            <i class="fas fa-chevron-down ml-1 hidden lg:inline text-xs"></i>
+                        </button>
+                    </div>
+                     <button class="ml-3 px-3 py-2 rounded-md text-sm font-medium elba-yellow text-black hover:bg-yellow-300">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                    </button>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                     <button id="mobile-theme-toggle" class="mr-2" aria-label="Toggle Dark Mode Mobile">
+                        <i class="fas fa-sun text-xl text-white"></i>
+                    </button>
+                    <button id="mobile-menu-toggle" class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Hauptmenü öffnen</span>
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="elba-yellow-text block px-3 py-2 rounded-md text-base font-medium border-b-2 border-yellow-400" aria-current="page">Startseite</a>
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Zahlungsaufträge</a>
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Wertpapier</a>
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Postfach</a>
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Service</a>
+            </div>
+            <div class="pt-4 pb-3 border-t border-gray-700">
+                <div class="flex items-center px-5">
+                    <div class="flex-shrink-0"> <i class="fas fa-user-circle text-3xl text-white"></i> </div>
+                    <div class="ml-3">
+                        <div class="text-base font-medium leading-none text-white">Philipp Asanger</div>
+                        <div class="text-sm font-medium leading-none text-gray-400">philipp.asanger@example.com</div>
+                    </div>
+                    <button class="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span class="sr-only">Benachrichtigungen anzeigen</span> <i class="fas fa-bell"></i>
+                    </button>
+                </div>
+                <div class="mt-3 px-2 space-y-1">
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Mein Profil</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Einstellungen</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Abmelden</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-semibold elba-dark-blue-text">Guten Morgen, Philipp Asanger!</h1>
+            <p class="text-gray-600">Willkommen zurück in Ihrem persönlichen Finanzportal.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <section class="card">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold elba-dark-blue-text">Meine aktuellen Finanzen</h2>
+                        <a href="#" class="text-sm elba-dark-blue-text hover:underline">Alle anzeigen <i class="fas fa-chevron-right text-xs"></i></a>
+                    </div>
+                    <div class="chart-container mb-6">
+                        <canvas id="financialOverviewChart"></canvas>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-gray-200 dark:border-gray-700 p-4 rounded-lg">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">Girokonto</h3>
+                                    <p class="text-xs text-gray-500">AT12 3456 7890 1234 5678</p>
+                                </div>
+                                <span class="status-dot status-green" title="Aktiv"></span>
+                            </div>
+                            <p class="text-2xl font-bold mt-2 elba-dark-blue-text">€ 12.345,67</p>
+                            <p class="text-sm text-gray-500 mt-1">Verfügbar: € 12.000,00</p>
+                        </div>
+                        <div class="border border-gray-200 dark:border-gray-700 p-4 rounded-lg">
+                             <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">Sparkonto</h3>
+                                    <p class="text-xs text-gray-500">AT98 7654 3210 9876 5432</p>
+                                </div>
+                                <span class="status-dot status-green" title="Aktiv"></span>
+                            </div>
+                            <p class="text-2xl font-bold mt-2 elba-dark-blue-text">€ 5.876,21</p>
+                             <p class="text-sm text-green-600 mt-1">+ € 50,10 diesen Monat</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2 class="text-xl font-semibold elba-dark-blue-text mb-4">Meine wichtigsten Funktionen</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <a href="#" class="icon-button"><i class="fas fa-exchange-alt"></i><span>Überweisung</span></a>
+                        <a href="#" class="icon-button"><i class="fas fa-file-invoice-dollar"></i><span>Daueraufträge</span></a>
+                        <a href="#" class="icon-button"><i class="fas fa-chart-line"></i><span>Finanzmanager</span></a>
+                        <a href="#" class="icon-button"><i class="fas fa-envelope"></i><span>Postfach</span></a>
+                        <a href="#" class="icon-button"><i class="fas fa-credit-card"></i><span>Karten</span></a>
+                        <a href="#" class="icon-button"><i class="fas fa-piggy-bank"></i><span>Sparen & Anlegen</span></a>
+                        <a href="#" class="icon-button"><i class="fas fa-shield-alt"></i><span>Versicherungen</span></a>
+                        <a href="#" class="icon-button"><i class="fas fa-ellipsis-h"></i><span>Mehr</span></a>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold elba-dark-blue-text">Meine letzten Umsätze</h2>
+                        <a href="#" class="text-sm elba-dark-blue-text hover:underline">Alle Umsätze anzeigen <i class="fas fa-chevron-right text-xs"></i></a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead> <tr class="table-header"> <th>Datum</th> <th>Beschreibung</th> <th>Kategorie</th> <th class="text-right">Betrag</th> </tr> </thead>
+                            <tbody>
+                                <tr class="table-row">
+                                    <td>06.05.2025</td> <td>Miete Mai</td> <td>Wohnen</td>
+                                    <td class="text-right"> <span class="text-red-600">- € 750,00</span> <span class="peer-comparison">(P: -5%)</span> <span class="emoji-indicator">👎</span> </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td>05.05.2025</td> <td>Gehalt April</td> <td>Einkommen</td>
+                                    <td class="text-right"> <span class="text-green-600">+ € 2.800,00</span> <span class="peer-comparison">(P: +10%)</span> <span class="emoji-indicator">👍</span> </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td>04.05.2025</td> <td>Supermarkt BILLA</td> <td>Lebensmittel</td>
+                                    <td class="text-right"> <span class="text-red-600">- € 65,30</span> <span class="peer-comparison">(P: +15%)</span> <span class="emoji-indicator">👍</span> </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td>02.05.2025</td> <td>Spotify Monatsabo</td> <td>Freizeit & Unterhaltung</td>
+                                    <td class="text-right"> <span class="text-red-600">- € 9,99</span> <span class="peer-comparison">(P: 0%)</span> <span class="emoji-indicator">👍</span> </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td>01.05.2025</td> <td>Dividende XYZ Corp</td> <td>Kapitalerträge</td>
+                                    <td class="text-right"> <span class="text-green-600">+ € 120,50</span> <span class="peer-comparison">(P: -8%)</span> <span class="emoji-indicator">👎</span> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="lg:col-span-1 space-y-6">
+                <section class="card">
+                    <h2 class="text-xl font-semibold elba-dark-blue-text mb-4">Schnellzugriff</h2>
+                     <div class="space-y-3">
+                        <a href="#" class="quick-access-button quick-access-yellow"> <i class="fas fa-plus-circle mr-2"></i> Neue Überweisung </a>
+                        <a href="#" class="quick-access-button quick-access-gray"> <i class="fas fa-search-dollar mr-2"></i> Finanzübersicht </a>
+                        <a href="#" class="quick-access-button quick-access-gray"> <i class="fas fa-user-cog mr-2"></i> Einstellungen </a>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2 class="text-xl font-semibold elba-dark-blue-text mb-4">Sicherheitshinweis</h2>
+                    <div class="security-note">
+                        <div class="flex">
+                            <div class="flex-shrink-0"> <i class="fas fa-shield-alt security-note-icon text-xl"></i> </div>
+                            <div class="ml-3">
+                                <p class="text-sm security-note-text"> Schützen Sie Ihre Zugangsdaten. Geben Sie diese niemals an Dritte weiter.
+                                    <a href="#" class="security-note-link">Mehr erfahren</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2 class="text-xl font-semibold elba-dark-blue-text mb-4">Kontakt & Hilfe</h2>
+                    <p class="text-sm text-gray-600 mb-2"><i class="fas fa-phone-alt mr-2 text-gray-500"></i> Serviceline: 050 123 4567</p>
+                    <p class="text-sm text-gray-600 mb-3"><i class="fas fa-question-circle mr-2 text-gray-500"></i> <a href="#" class="hover:underline elba-dark-blue-text">Hilfe & FAQ</a></p>
+                    <a href="#" class="quick-access-button quick-access-gray text-center"> Nachricht an Berater </a>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="footer-bg mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center footer-text text-sm">
+            <div class="mb-4">
+                <a href="#" class="footer-link px-2">Impressum</a> |
+                <a href="#" class="footer-link px-2">Datenschutz</a> |
+                <a href="#" class="footer-link px-2">AGB</a> |
+                <a href="#" class="footer-link px-2">Sicherheit</a>
+            </div>
+            <p>&copy; <span id="currentYear"></span> Firmenname. Alle Rechte vorbehalten.</p>
+            <p class="text-xs mt-1">Dies ist eine vereinfachte Nachbildung zu Demonstrationszwecken.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Theme Toggle Functionality ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle');
+        const htmlElement = document.documentElement;
+        let financialChart = null; // To store the chart instance
+
+        function updateToggleIcons(isDark) {
+            const iconClass = isDark ? 'fa-moon' : 'fa-sun';
+            if (themeToggleBtn) themeToggleBtn.querySelector('i').className = `fas ${iconClass}`;
+            if (mobileThemeToggleBtn) mobileThemeToggleBtn.querySelector('i').className = `fas ${iconClass} text-xl ${isDark ? 'text-white' : 'text-gray-600'}`;
+        }
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+            updateToggleIcons(isDark);
+            if (financialChart) { // Update chart if it exists
+                updateChartTheme(isDark);
+            }
+        }
+
+        function toggleTheme() {
+            const isCurrentlyDark = htmlElement.classList.contains('dark');
+            applyTheme(!isCurrentlyDark);
+            localStorage.setItem('theme', !isCurrentlyDark ? 'dark' : 'light');
+        }
+
+        if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+        if (mobileThemeToggleBtn) mobileThemeToggleBtn.addEventListener('click', toggleTheme);
+
+        // Apply saved theme or default to dark
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            applyTheme(savedTheme === 'dark');
+        } else {
+            // Default to dark mode as requested
+            applyTheme(true);
+        }
+
+
+        // --- Splash Screen Logic ---
+        window.addEventListener('load', () => {
+            const splashScreen = document.getElementById('splash-screen');
+            setTimeout(() => {
+                if(splashScreen) splashScreen.classList.add('hidden-splash');
+            }, 1500); // Splash screen visible for 1.5 seconds
+
+            // Initialize chart after splash screen and theme are set
+            createFinancialChart();
+        });
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenuButton.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
+                }
+            });
+        }
+
+        // --- Set Current Year in Footer ---
+        const currentYearElement = document.getElementById('currentYear');
+        if (currentYearElement) currentYearElement.textContent = new Date().getFullYear();
+
+        // --- Financial Overview Chart (Chart.js) ---
+        function getChartColors(isDark) {
+            return {
+                textColor: isDark ? '#f3f4f6' : '#1f2937', // gray-100 / gray-800
+                gridColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                userIncomeColor: '#28a745', // Green
+                userExpensesColor: '#dc3545', // Red
+                peerIncomeColor: 'rgba(40, 167, 69, 0.6)', // Lighter Green
+                peerExpensesColor: 'rgba(220, 53, 69, 0.6)', // Lighter Red
+                tooltipBg: isDark ? 'rgba(31, 41, 55, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+                tooltipText: isDark ? '#f3f4f6' : '#1f2937'
+            };
+        }
+
+        function createFinancialChart() {
+            const ctx = document.getElementById('financialOverviewChart')?.getContext('2d');
+            if (!ctx) return;
+
+            const isDark = htmlElement.classList.contains('dark');
+            const colors = getChartColors(isDark);
+
+            // Sample data (replace with actual data)
+            const data = {
+                labels: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai'],
+                datasets: [
+                    {
+                        label: 'Eigene Einnahmen',
+                        data: [2800, 2900, 3000, 2850, 3100],
+                        backgroundColor: colors.userIncomeColor,
+                        borderColor: colors.userIncomeColor,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Eigene Ausgaben',
+                        data: [1500, 1600, 1400, 1750, 1650],
+                        backgroundColor: colors.userExpensesColor,
+                        borderColor: colors.userExpensesColor,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Peergroup Einnahmen',
+                        data: [2500, 2600, 2700, 2550, 2800],
+                        backgroundColor: colors.peerIncomeColor,
+                        borderColor: colors.peerIncomeColor,
+                        borderWidth: 1,
+                        type: 'line', // Show peer group as lines for differentiation
+                        tension: 0.3,
+                        borderDash: [5, 5] // Dashed line
+                    },
+                    {
+                        label: 'Peergroup Ausgaben',
+                        data: [1800, 1900, 1700, 2050, 1950],
+                        backgroundColor: colors.peerExpensesColor,
+                        borderColor: colors.peerExpensesColor,
+                        borderWidth: 1,
+                        type: 'line',
+                        tension: 0.3,
+                        borderDash: [5, 5]
+                    }
+                ]
+            };
+
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: colors.textColor,
+                                font: { size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: colors.tooltipBg,
+                            titleColor: colors.tooltipText,
+                            bodyColor: colors.tooltipText,
+                            borderColor: colors.gridColor,
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: colors.textColor,
+                                callback: function(value) {
+                                    return '€' + value / 1000 + 'k';
+                                }
+                            },
+                            grid: {
+                                color: colors.gridColor,
+                                borderColor: colors.gridColor
+                            }
+                        },
+                        x: {
+                            ticks: { color: colors.textColor },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            };
+            financialChart = new Chart(ctx, config);
+        }
+
+        function updateChartTheme(isDark) {
+            if (!financialChart) return;
+
+            const colors = getChartColors(isDark);
+
+            financialChart.options.plugins.legend.labels.color = colors.textColor;
+            financialChart.options.plugins.tooltip.backgroundColor = colors.tooltipBg;
+            financialChart.options.plugins.tooltip.titleColor = colors.tooltipText;
+            financialChart.options.plugins.tooltip.bodyColor = colors.tooltipText;
+            financialChart.options.plugins.tooltip.borderColor = colors.gridColor;
+
+            financialChart.options.scales.y.ticks.color = colors.textColor;
+            financialChart.options.scales.y.grid.color = colors.gridColor;
+            financialChart.options.scales.y.grid.borderColor = colors.gridColor;
+            financialChart.options.scales.x.ticks.color = colors.textColor;
+
+            // Update dataset colors if needed (though these are fixed for now)
+            // financialChart.data.datasets[0].backgroundColor = colors.userIncomeColor;
+            // ... and so on for other datasets
+
+            financialChart.update();
+        }
+
+    </script>
+
+</body>
+</html>
