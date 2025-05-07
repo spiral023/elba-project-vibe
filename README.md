@@ -10,8 +10,10 @@
 
 ## 🌟 Beschreibung
 
+![ELBA Vibe Vision](https://sp23.online/images/vision.png)
+
 <div align="center">
-<h6><a href="https://elba-vibe.sp23.online">ELBA VIBE</a></h6>
+<h2><a href="https://elba-vibe.sp23.online">LIVE PREVIEW: ELBA VIBE</a></h6>
 </div>
 
 **ELBA Vibe** ist eine moderne, interaktive Simulation eines Online-Banking-Dashboards. Es demonstriert ein benutzerfreundliches Interface mit aktuellen Web-Technologien und integriert innovative Features wie KI-gestützte Interaktionen, Gamification und personalisierte Übersichten. Dieses Projekt dient als Showcase für ein zukunftsweisendes digitales Bankerlebnis.
