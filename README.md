@@ -1,4 +1,4 @@
-# ELBA Vibe - Modernes Banking Dashboard (Simulation)
+# ELBA Vibe - Raiffeisen Hackathon 2025 Prototype
 
 ![ELBA Vibe Logo](https://sp23.online/images/logo.png)
 
@@ -16,7 +16,9 @@
 <h2><a href="https://elba-vibe.sp23.online">LIVE PREVIEW: ELBA VIBE</a></h6>
 </div>
 
-**ELBA Vibe** ist eine moderne, interaktive Simulation eines Online-Banking-Dashboards. Es demonstriert ein benutzerfreundliches Interface mit aktuellen Web-Technologien und integriert innovative Features wie KI-gestützte Interaktionen, Gamification und personalisierte Übersichten. Dieses Projekt dient als Showcase für ein zukunftsweisendes digitales Bankerlebnis.
+**ELBA Vibe** ist eine moderne, interaktive Simulation eines Online-Banking-Dashboards des Team 6 für Raiffeisen Hackathon 2025. Es demonstriert ein benutzerfreundliches Interface mit aktuellen Web-Technologien und integriert innovative Features wie KI-gestützte Interaktionen, Gamification und personalisierte Übersichten. Dieses Projekt dient als Showcase für ein zukunftsweisendes digitales Bankerlebnis.
+
+![ELBA Vibe Pitch](https://sp23.online/images/leonie.png)
 
 ## ✨ Features
 
@@ -43,47 +45,26 @@
 * **Dynamische Elemente:** Letzte Umsätze, Wichtige Funktionen, Schnellzugriff, Kontaktmöglichkeiten.
 * **Benutzerdefinierte Elemente:** Profilbild, Benutzername.
 
+![ELBA Vibe Ad](https://sp23.online/images/vibe_ad.png)
+
 ## 🛠️ Technologie-Stack
 
+* **Backend/Tech-Demo:** Azure AI/ML, Angular, Python
+
+* **Prototype/Demo:**
 * **Frontend:** HTML5, CSS3, JavaScript (ES6+)
 * **Styling:** Tailwind CSS v3
 * **Diagramme:** Chart.js v3.9.1
 * **Icons:** Font Awesome v6
 
-## 🚀 Setup & Verwendung
+![ELBA Vibe Architektur](https://sp23.online/images/architektur.png)
 
-1.  **Keine Installation notwendig:** Da es sich um reines Frontend-Projekt handelt, ist keine Server-Installation erforderlich.
-2.  **Öffnen:** Laden Sie die `index.html` (oder den entsprechenden Dateinamen, unter dem Sie den Code gespeichert haben) einfach in einem modernen Webbrowser (Chrome, Firefox, Edge, Safari).
-3.  **Interagieren:**
-    * Klicken Sie auf dem Splash Screen auf "Zeig mir das neue ELBA!".
-    * Nutzen Sie den Dark/Light Mode Toggle in der Kopfzeile.
-    * Interagieren Sie mit dem Chat-Fenster.
-    * Klicken Sie auf den schwebenden AI Berater Button, um die Audio-Wiedergabe zu testen.
-    * Erkunden Sie die verschiedenen Dashboard-Module.
+![ELBA Vibe Tech Demo](https://sp23.online/images/demo_backup.png)
 
-**Hinweis:** Die Chat-Funktion ist derzeit eine Simulation. Für eine echte Interaktion mit OpenAI muss ein gültiger API-Schlüssel in der JavaScript-Variable `OPENAI_API_KEY` hinterlegt und der entsprechende Code-Abschnitt (`callOpenAI` Funktion) aktiviert werden.
+![ELBA Vibe Tech Demo](https://sp23.online/images/demo_backup_2.png)
 
-## 🏗️ Struktur der Komponenten
-
-* **Splash Screen:** Initialer Ladebildschirm mit Feature-Übersicht und Start-Button.
-* **Header:** Navigation, Benutzerprofil (mit Bild), Suche, Benachrichtigungen, Theme-Toggle, Logout.
-* **Main Content Area (Linke Spalte):**
-    * Begrüßung
-    * Finanzübersicht (Chart, Kontostände)
-    * Chat-Modul
-    * Wichtige Funktionen (Icon-Buttons)
-    * Letzte Umsätze (Tabelle)
-* **Sidebar (Rechte Spalte):**
-    * Achievements (Abzeichen, Leaderboard)
-    * Schnellzugriff
-    * Sicherheitshinweis
-    * Kontakt & Hilfe
-* **Floating Button:** AI Voice Clone Berater.
-* **Footer:** Impressum, Datenschutz etc., Disclaimer.
+![ELBA Vibe Tech Demo](https://sp23.online/images/slide4.png)
 
 ## 📝 Disclaimer
 
 Dies ist eine vereinfachte Nachbildung und Simulation eines modernen Online-Banking-Dashboards zu Demonstrations- und Entwicklungszwecken. Es stellt keine echte Banking-Anwendung dar und verarbeitet keine echten Finanzdaten.
-
-Powered by RAITEC!
-0 lines code written! © Philipp Asanger
